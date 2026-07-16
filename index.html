@@ -61,6 +61,7 @@
 
     #run-button { background: #ffffff; color: #111111; }
     #status-button { background: #ffd54f; color: #111111; }
+    #speed-button { background:#4caf50;color:white; }
 
     .hint {
       display: block;
@@ -100,9 +101,13 @@
       const topPanel = document.querySelector('#top-panel');
       const runButton = document.querySelector('#run-button');
       const statusButton = document.querySelector('#status-button');
+      const speedButton = document.querySelector('#speed-button');
 
       let running = true;
       let warning = false;
+      let speedX2=false;
+      const normalSpeed=220;
+      const doubleSpeed=440;
 
       marker.addEventListener('markerFound', () => {
         topPanel.innerHTML = 'พบ Hiro Marker แล้ว — โมเดลมอเตอร์พร้อมใช้งาน<span class="hint">แตะปุ่มด้านล่างเพื่อทดลองควบคุม</span>';
@@ -135,6 +140,13 @@
           statusButton.textContent = 'จำลองคำเตือน';
         }
       });
+
+      speedButton.addEventListener('click',()=>{
+        speedX2=!speedX2;
+        const speed=speedX2?doubleSpeed:normalSpeed;
+        shaft.setAttribute('spin-control',`axis: y; speed: ${speed}; active: ${running}`);
+        speedButton.textContent=speedX2?'Speed x1':'Speed ×2';
+      });
     });
   </script>
 </head>
@@ -148,6 +160,7 @@
   <div id="controls">
     <button id="run-button" type="button">หยุดมอเตอร์</button>
     <button id="status-button" type="button">จำลองคำเตือน</button>
+    <button id="speed-button" type="button">Speed ×2</button>
   </div>
 
   <a-scene
@@ -242,3 +255,4 @@
   </a-scene>
 </body>
 </html>
+
